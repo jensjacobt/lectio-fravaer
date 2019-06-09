@@ -1,0 +1,1 @@
+export { TableManipulator } from './TableManipulator';
