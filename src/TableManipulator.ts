@@ -7,19 +7,17 @@ export class TableManipulator {
   private readonly unitHeaderNumber = 2;
   private readonly unitHeaderCols = [11, 10, 7, 6, 5, 4, 1, 0]; // must be in reverse order
   private readonly dataCols = [13, 12, 9, 8, 7, 6, 3, 2, 0];    // must be in reverse order
+  private readonly classAbsenseColumnNumber = 1;
+  private readonly assignmentAbsenseColumnNumber = 3;
 
   private tableRows: JQuery;
-  private readonly yellowThreshold: number;
-  private readonly redThreshold: number;
+  private dataRows: JQuery;
 
   constructor(
-    table: JQuery, 
-    yellowThreshold: number = 9, 
-    redThreshold: number = 12
+    table: JQuery
   ) {
     this.tableRows = table.find('tr');
-    this.yellowThreshold = yellowThreshold;
-    this.redThreshold = redThreshold;
+    this.dataRows = this.tableRows.filter(index => (index > this.unitHeaderNumber));
   }
 
   /**
@@ -39,13 +37,41 @@ export class TableManipulator {
   }
 
   roundPercentages(numberOfDecimals: number = 0): void {
-    const numDecimals: number = Math.round(numberOfDecimals);
-    if(numDecimals > 1)
+    numberOfDecimals = Math.round(numberOfDecimals);
+    if(numberOfDecimals > 1)
       return;
     const tds = this.tableRows
                     .filter(index => (index > this.unitHeaderNumber))
                     .find('td');
-    tds.each(this.roundPercentageInCell(numDecimals));
+    tds.each(this.roundPercentageInCell(numberOfDecimals));
+  }
+
+  colorByAbsence(
+    yellowThreshold: number = 9, 
+    redThreshold: number = 12,
+    yellowColor: string = 'rgb(255, 191, 0)',
+    redColor: string = 'rgb(255, 41, 55)'
+  ) {
+    this.dataRows
+      .filter((i, row) => (this.getMaxAbsense(row) >= yellowThreshold))
+      .css('background-color', yellowColor);
+
+    this.dataRows
+      .filter((i, row) => (this.getMaxAbsense(row) >= redThreshold))
+      .css('background-color', redColor);
+  }
+
+  private getMaxAbsense(tr: HTMLElement): number {
+    let classAbsense = this.getNumberFromCell(tr, this.classAbsenseColumnNumber);
+    let assignmentAbsense = this.getNumberFromCell(tr, this.assignmentAbsenseColumnNumber);
+    return Math.max(classAbsense, assignmentAbsense);
+  }
+
+  private getNumberFromCell(tr: HTMLElement, columnNumber: number): number {
+    let text = tr.children[columnNumber].textContent;
+    text = text.substring(0, text.length - 1);
+    text = text.replace(",",".");
+    return Number(text);
   }
 
   private roundPercentageInCell(numDecimals: number): (index: number, element: HTMLElement) => void {
@@ -70,14 +96,13 @@ export class TableManipulator {
    * Reduce the data rows of the table.
    * Make the link text of the table black.
    */
-  private reduceDataRowsAndTurnLinksBlack() {
-    const dataRows = this.tableRows.filter(index => (index > this.unitHeaderNumber));
+  private reduceDataRowsAndTurnLinksBlack() { 
     this.dataCols.forEach(col => {
-      dataRows
+      this.dataRows
         .find('td:eq(' + col + ')')
         .remove();
     });
-    dataRows
+    this.dataRows
       .find('a')
       .css('color', 'black');
   }

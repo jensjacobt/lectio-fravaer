@@ -71,22 +71,7 @@ function getMaxAbsense(tr) {
 function getNumberFromCell(tr, colNumber) {
   let text = tr.children[colNumber].textContent;
   text = text.substring(0, text.length - 1);
-  text = text.replace(",",".");let tds = document.querySelectorAll(" td");
-
-  tds.forEach((td) => {
-    let text = td.textContent;
-    if (!text.includes('%')) {
-      return;
-    }
-    text = text.substring(0, text.length - 1);
-    text = text.replace(",",".");
-    let number = parseFloat(text);
-    number = number.toFixed(numDecimals);
-    text = number.toString();
-    text = text.replace(".", ",");
-    text = text + "%"
-    td.textContent = text;
-  });
+  text = text.replace(",",".");
   let number = Number(text);
   return number;
 }
@@ -95,8 +80,8 @@ function getNumberFromCell(tr, colNumber) {
 
 dataRows
   .filter((i, row) => (getMaxAbsense(row) >= yellowThreshold))
-  .css('background-color', '#FFBF00') // yellow
+  .css('background-color', '#FFBF00'); // yellow
 
 dataRows
   .filter((i, row) => (getMaxAbsense(row) >= redTreshold))
-  .css('background-color', '#FF2937') // red
+  .css('background-color', '#FF2937'); // red

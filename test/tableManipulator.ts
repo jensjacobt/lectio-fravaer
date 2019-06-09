@@ -22,14 +22,8 @@ describe('TableManipulator', () => {
       `
   });
 
-  it('can be initialized with default arguments', () => {
+  it('can be initialized', () => {
     const tm = new TableManipulator($('table'));
-    const tmtype = typeof tm;
-    expect( tmtype ).to.equal('object');
-  });
-
-  it('can be initialized with explicit arguments', () => {
-    const tm = new TableManipulator($('table'), 7, 9);
     const tmtype = typeof tm;
     expect( tmtype ).to.equal('object');
   });
@@ -181,8 +175,29 @@ describe('TableManipulator', () => {
 
     });
 
-    context('colors', () => {
-      // TODO: Test and implement colors
+    context('after coloring', () => {
+      before(() => {
+        document.body.innerHTML = global.htmlString;
+        const tm = new TableManipulator($(tableId));
+        tm.reduceTable();
+        tm.colorByAbsence();
+      });
+
+      it('low absence rows are not colored', () => {
+        expect($(tableId).find('tr').get(4).style.backgroundColor).to.equal('');
+      });
+
+      it('high absense rows are colored yellow', () => {
+        expect($(tableId).find('tr').get(3).style.backgroundColor).to.equal('rgb(255, 191, 0)');
+        expect($(tableId).find('tr').get(6).style.backgroundColor).to.equal('rgb(255, 191, 0)');
+      });
+
+      it('very high absense rows are colored red', () => {
+        // console.log($(tableId).html());
+        expect($(tableId).find('tr').get(9).style.backgroundColor).to.equal('rgb(255, 41, 55)');
+        expect($(tableId).find('tr').get(10).style.backgroundColor).to.equal('rgb(255, 41, 55)');
+      });
+      
     });
   });
 
