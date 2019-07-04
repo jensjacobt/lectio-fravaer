@@ -173,6 +173,24 @@ describe('TableManipulator', () => {
         }
       });
 
+      it('to 0.6 decimals (i.e. 1 decimal) correctly', () => {
+        tm.roundPercentages(0.6);
+        const arr: object = {
+          1: 'Flemming Fleck',
+          2: '7,0%',
+          3: '35,99/515',
+          4: '5,8%',
+          5: '10/174'
+        };
+        const entries = Object.entries(arr);
+        for(const entry of entries) {
+          const colNumber = parseInt(entry[0]);
+          const knownString = entry[1];
+          const text = $(tableId).find('tr').eq(8).find('td').get(colNumber - 1).textContent;
+          expect( text ).to.equal(knownString);
+        }
+      });
+
     });
 
     context('after coloring', () => {

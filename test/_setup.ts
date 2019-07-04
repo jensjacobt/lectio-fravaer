@@ -15,8 +15,7 @@ window = new JSDOM('<body></body>').window;
 document = window.document;
 global.window = window;
 global.document = document;
-global.jQuery = require('jquery');//(window, true);
-// jQueryFactory(window);
+global.jQuery = require('jquery');
 
 global.htmlString = 
 `

@@ -13,9 +13,7 @@ export class TableManipulator {
   private tableRows: JQuery;
   private dataRows: JQuery;
 
-  constructor(
-    table: JQuery
-  ) {
+  constructor(table: JQuery) {
     this.tableRows = table.find('tr');
     this.dataRows = this.tableRows.filter(index => (index > this.unitHeaderNumber));
   }
@@ -83,13 +81,13 @@ export class TableManipulator {
     };
   }
 
-  private roundPercentageNumber(text: string, numDecimals: number) {
-    text = text.substring(0, text.length - 1);
-    text = text.replace(",", ".");
-    text = Number.parseFloat(text).toFixed(numDecimals);
-    text = text.replace(".", ",");
-    text = text + "%";
-    return text;
+  private roundPercentageNumber(numberText: string, numDecimals: number) {
+    numberText = numberText.substring(0, numberText.length - 1);
+    numberText = numberText.replace(",", ".");
+    numberText = Number.parseFloat(numberText).toFixed(numDecimals);
+    numberText = numberText.replace(".", ",");
+    numberText = numberText + "%";
+    return numberText;
   }
 
   /**
@@ -126,7 +124,7 @@ export class TableManipulator {
     this.tableRows
       .eq(this.TimeHeaderNumber)
       .children()
-      .filter((i, th) => !(th.textContent == 'Opgjort'))
+      .filter((i, th) => !(th.textContent === 'Opgjort'))
       .remove();
   }
 
