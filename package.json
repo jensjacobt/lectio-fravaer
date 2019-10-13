@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "mocha --require ts-node/register test/**/*.ts"
+    "test": "mocha --require ts-node/register test/tableManipulator.ts"
   },
   "author": "Jens Jacob Thomsen",
   "license": "GPL-3.0",

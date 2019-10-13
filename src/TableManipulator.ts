@@ -1,7 +1,7 @@
 /**
  * Manipulator of Lectio absense tables.
  */
-export class TableManipulator {
+class TableManipulator {
   private readonly TypeHeaderNumber = 0;
   private readonly TimeHeaderNumber = 1;
   private readonly unitHeaderNumber = 2;
@@ -45,7 +45,7 @@ export class TableManipulator {
   }
 
   colorByAbsence(
-    yellowThreshold: number = 9, 
+    yellowThreshold: number = 7, 
     redThreshold: number = 12,
     yellowColor: string = 'rgb(255, 191, 0)',
     redColor: string = 'rgb(255, 41, 55)'

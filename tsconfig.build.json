@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+      "target": "es6",
+      "module": "none",
+      "sourceMap": true,
+      "out": "build/content-script.js"
+  },
+  "include": [
+    "src/content-script.ts"
+  ]
+}

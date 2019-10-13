@@ -1,5 +1,5 @@
+import { TableManipulator } from '../src/TableManipulator';
 import { expect } from 'chai';
-import { TableManipulator } from '../src';
 
 declare namespace NodeJS {
   export interface Global {
