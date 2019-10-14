@@ -18,6 +18,22 @@
       "problemMatcher": [
         "$gulp-tsc"
       ]
-    }
+    },
+    {
+      "type": "gulp",
+      "task": "transpile",
+      "group": "build",
+      "problemMatcher": [
+        "$gulp-tsc"
+      ]
+    },
+    {
+      "type": "gulp",
+      "task": "watch",
+      "group": "build",
+      "problemMatcher": [
+        "$gulp-tsc"
+      ]
+    },
   ]
 }

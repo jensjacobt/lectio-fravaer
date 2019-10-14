@@ -34,21 +34,25 @@ function transpile() {
     .pipe(dest('dist'));
 }
 
-exports.default = series(
+
+
+exports.build = series(
   clean, 
   copy
 );
 
-exports.build = exports.default;
+exports.transpile = series(removeExportKeyword, transpile, addExportKeyword);
 
 exports.build_full = series(
   clean, 
   parallel(
     copy, 
-    series(removeExportKeyword, transpile, addExportKeyword)
+    exports.transpile
   )
 );
 
 exports.watch = function() {
   watch(['src/**', '!**/*.ts'], exports.build);
 };
+
+exports.default = exports.build;
