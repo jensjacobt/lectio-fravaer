@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": true
+  },
+  "include": [
+    "src/**/*.ts",
+    "test/**/*.ts"
+  ]
+}

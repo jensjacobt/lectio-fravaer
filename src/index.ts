@@ -1,1 +1,0 @@
-export { TableManipulator } from './TableManipulator';
