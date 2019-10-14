@@ -15,6 +15,7 @@ tmp
 
 # Build
 build
+dist
 
 # Coverage reports
 coverage
