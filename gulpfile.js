@@ -8,7 +8,7 @@ function clean(cb) {
 }
 
 function copy() {
-  return src(['src/**', '!**/*.ts', 'vendor/**'])
+  return src(['src/**', '!**/*.ts', 'vendor/**', 'icons/icon*.png'])
     .pipe(dest('dist'));
 }
 
@@ -34,12 +34,7 @@ function transpile() {
     .pipe(dest('dist'));
 }
 
-
-
-exports.build = series(
-  clean, 
-  copy
-);
+exports.build = series(clean, copy);
 
 exports.transpile = series(removeExportKeyword, transpile, addExportKeyword);
 
@@ -51,8 +46,6 @@ exports.build_full = series(
   )
 );
 
-exports.watch = function() {
-  watch(['src/**', '!**/*.ts'], exports.build);
-};
+exports.watch = function() { watch(['src/**', '!**/*.ts'], exports.build); };
 
 exports.default = exports.build;
