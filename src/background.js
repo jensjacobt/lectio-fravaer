@@ -32,4 +32,10 @@ function setSettings(settings) {
   localStorage.setItem('redThreshold', settings.redThreshold);
   localStorage.setItem('numberOfDecimals', settings.numberOfDecimals);
   localStorage.setItem('enabled', settings.enabled);
+  updateBadge(settings.enabled);
+}
+
+function updateBadge(enabled) {
+  let badge_text = enabled ? '' : 'FRA';
+  chrome.browserAction.setBadgeText({text: badge_text});
 }
