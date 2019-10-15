@@ -1,7 +1,6 @@
 /**
  * Manipulator of Lectio absense tables.
  */
-/* export */ 
 export class TableManipulator {
   private readonly TypeHeaderNumber = 0;
   private readonly TimeHeaderNumber = 1;

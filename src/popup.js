@@ -28,10 +28,8 @@ class SelectElement
   }
 }
 
-let formId = 'settingsForm';
-let form = document.getElementById(formId);
-let setButton = form.getElementsByTagName('button')[0];
-let cancelButton = form.getElementsByTagName('button')[1];
+let form = document.getElementById('settingsForm');
+let enabledCheckbox = document.getElementById('enabled');
 
 let yellowSelect = new SelectElement('yellowThreshold');
 let redSelect = new SelectElement('redThreshold');
@@ -43,41 +41,34 @@ chrome.runtime.sendMessage({action: 'getSettings'}, (response) => {
   selectElements.forEach((se) => {
     se.setValue(settings[se.id]);
   });
+  enabledCheckbox.checked = settings.enabled;
 });
 
-selectElements.forEach((se) => {
-  se.element.addEventListener("change", updateSettings(se));
-});
+yellowSelect.element.addEventListener("change", updateFromYellow);
+redSelect.element.addEventListener("change", updateFromRed);
+numberSelect.element.addEventListener("change", updateSettings);
+enabledCheckbox.addEventListener("change", updateSettings);
 
-function updateSettings(se) {
-  let offsetHandler;
-  if(se.id == 'yellowThreshold')
-    offsetHandler = increaseRed;
-  else if(se.id == 'redThreshold')
-    offsetHandler = decreaseYellow;
-  else
-    offsetHandler = function() { return; };
+function updateSettings() {
+  let settings = {};
+  selectElements.forEach((se) => {
+    settings[se.id] = se.getValue();
+  });
+  settings.enabled = enabledCheckbox.checked ? 1 : 0;
 
-  return function() {
-    offsetHandler();
-  
-    let settings = {};
-    selectElements.forEach((se) => {
-      settings[se.id] = se.getValue();
-    });
-  
-    chrome.runtime.sendMessage({action: 'setSettings', settings: settings});
-  }
+  chrome.runtime.sendMessage({action: 'setSettings', settings: settings});
 }
 
-function increaseRed() {
+function updateFromYellow() { // increase red
   if(redSelect.getValue() <= yellowSelect.getValue()) {
     redSelect.setValue(yellowSelect.getValue() + 1);
   }
+  updateSettings();
 }
 
-function decreaseYellow() {
+function updateFromRed() { // decrease yellow
   if(redSelect.getValue() <= yellowSelect.getValue()) {
     yellowSelect.setValue(redSelect.getValue() - 1);
   }
+  updateSettings();
 }

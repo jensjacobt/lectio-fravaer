@@ -10,20 +10,26 @@ chrome.runtime.onMessage.addListener(
     }
 });
 
+// Notice: enabled must be either 0 or 1 (not true or false)
 chrome.runtime.onInstalled.addListener(function () {
-  setSettings({yellowThreshold: 7, redThreshold: 12, numberOfDecimals: 1});
+  setSettings({yellowThreshold: 7, redThreshold: 12, numberOfDecimals: 1, enabled: 1});
 });
 
 function getSettings() {
-  let yellowThreshold = Number.parseInt(localStorage.getItem('yellowThreshold'));
-  let redThreshold = Number.parseInt(localStorage.getItem('redThreshold'));
-  let numberOfDecimals = Number.parseInt(localStorage.getItem('numberOfDecimals'));
-  let settings = {yellowThreshold: yellowThreshold, redThreshold: redThreshold, numberOfDecimals: numberOfDecimals};
-  return settings;
+  let yellowThreshold = getSetting('yellowThreshold');
+  let redThreshold = getSetting('redThreshold');
+  let numberOfDecimals = getSetting('numberOfDecimals');
+  let enabled = getSetting('enabled');
+  return {yellowThreshold, redThreshold, numberOfDecimals, enabled};
+}
+
+function getSetting(id) {
+  return Number.parseInt(localStorage.getItem(id));
 }
 
 function setSettings(settings) {
   localStorage.setItem('yellowThreshold', settings.yellowThreshold);
   localStorage.setItem('redThreshold', settings.redThreshold);
   localStorage.setItem('numberOfDecimals', settings.numberOfDecimals);
+  localStorage.setItem('enabled', settings.enabled);
 }

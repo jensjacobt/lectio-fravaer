@@ -31,6 +31,84 @@
       h1 {
         font-size: 15pt;
       }
+
+      /* Toggle from http://www.cssscript.com/material-design-inspired-animated-toggle-pure-css/ */
+      label.input-toggle {
+        line-height: 0;
+        font-size: 0;
+        display: inline-block;
+        margin: 10pt 0 0 6pt;
+      }
+
+      label.input-toggle > span {
+        display: inline-block;
+        position: relative;
+        background-image: -webkit-linear-gradient(left, #B3E5FC 0%, #B3E5FC 50%, #039BE5 50%, #039BE5 100%);
+        background-image: linear-gradient(to right, #B3E5FC 0%, #B3E5FC 50%, #039BE5 50%, #039BE5 100%);
+          /*background-image: -webkit-linear-gradient(left, #B2EBF2 0%, #B2EBF2 50%, #00BCD4 50%, #00BCD4 100%);
+          background-image: linear-gradient(to right, #B2EBF2 0%, #B2EBF2 50%, #00BCD4 50%, #00BCD4 100%);*/
+        background-size: 64px 14px;
+        background-position: 0%;
+        border-radius: 32px;
+        width: 32px;
+        height: 14px;
+        cursor: pointer;
+        -webkit-transition: background-position 0.2s ease-in;
+        transition: background-position 0.2s ease-in;
+      }
+
+      label.input-toggle > input:checked + span { background-position: -100%; }
+
+      label.input-toggle > span:after {
+        content: "";
+        display: block;
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        background: #F1F1F1;
+        -webkit-align-self: center;
+        -ms-flex-item-align: center;
+        align-self: center;
+        top: 50%;
+        left: 0;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        border-radius: 100%;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        -webkit-transition: left 0.2s ease-in, background-color 0.2s ease-in, -webkit-transform 0.3s ease;
+        transition: left 0.2s ease-in, background-color 0.2s ease-in, -webkit-transform 0.3s ease;
+        transition: left 0.2s ease-in, background-color 0.2s ease-in, transform 0.3s ease;
+        transition: left 0.2s ease-in, background-color 0.2s ease-in, transform 0.3s ease, -webkit-transform 0.3s ease;
+      }
+
+      label.input-toggle > input:checked + span:after {
+        left: calc(100% - 18px);
+        background-color: #0277BD;
+      }
+
+      label.input-toggle > span:active:after {
+        -webkit-transform: translateY(-50%) scale3d(1.15, 0.85, 1);
+        transform: translateY(-50%) scale3d(1.15, 0.85, 1);
+      }
+
+      label.input-toggle > input:disabled + span:active:after {
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+      }
+
+      label.input-toggle > input:disabled + span { cursor: default; }
+
+      label.input-toggle > input:disabled + span { background: #D5D5D5; }
+
+      label.input-toggle > input:disabled + span:after { background: #BDBDBD; }
+
+      label.input-toggle > input {
+        display: block;
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
     </style>
   </head>
   <body>
@@ -71,6 +149,12 @@
           <option value="1">1</option>
           <option value="2">2</option>
       </select>
+      <br>
+      <label>Slå til eller fra:</label> 
+      <label class="input-toggle">
+        <input type="checkbox" id="enabled" checked>
+        <span></span>
+      </label>
       <p>Genopfrisk siden for at bruge ændrede indstillinger.</p>
     </form>
     <script src="popup.js"></script>
